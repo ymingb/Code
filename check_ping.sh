@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 x=0
 y=0
 for i in {1..15}

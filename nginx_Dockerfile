@@ -1,0 +1,7 @@
+FROM myos:latest
+RUN yum -y install gcc pcre openssl && useradd nginx
+ADD nginx.tar.gz /usr/local/
+EXPOSE 80
+WORKDIR /usr/local/nginx/html
+CMD ["/usr/local/nginx/sbin/nginx","-g","daemon off;"]
+

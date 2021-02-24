@@ -1,0 +1,6 @@
+FROM myos:latest
+RUN yum -y install php-fpm
+COPY www.conf /etc/php-fpm.d/
+EXPOSE 9000
+WORKDIR /usr/local/nginx/html
+CMD ["/sbin/php-fpm","--nodaemonize"]

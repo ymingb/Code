@@ -1,0 +1,18 @@
+制作nginx服务镜像：
+1.在宿主机上面编译安装好nginx服务
+2.修改nginx配置文件，开启动静分离
+3.将/usr/local下的nginx目录进行打包
+4.创建nginx制作Dockerfile的目录，并将nginx.tar.gz复制到目录下
+5.书写Dockerfile文件并生成myos:nginx镜像
+注意Dockerfile最后一行CMD书写格式:  CMD ["/usr/local/nginx/sbin/nginx","-g","daemon off;"]
+
+制作php-fpm服务镜像：
+1.在宿主机上安装php-fpm，并修改配置文件监听所有ip地址的9000端口和注释掉允许本机客户端监听行
+2.创建php-fpm制作Dockerfile的目录，并将修改好的的配置文件复制到当前目录
+3.书写Dockerfile文件并生成myos:php-fpm镜像
+注意Dockerfile最后一行CMD书写格式: CMD ["/sbin/php-fpm","--nodaemonize"]
+
+nginx映射宿主机目录、配置文件和端口到容器：
+docker run -itd -v webroot:/usr/local/nginx/html -v nginx.conf:/usr/local/nginx/conf/nginx.conf -p 80:80 --name=nginx myos:nginx
+php-fpm映射宿主机目录和关联nginx容器通信：
+docker run -itd -v webroot:/usr/local/nginx/html --network=container:nginx myos:php-fpm
